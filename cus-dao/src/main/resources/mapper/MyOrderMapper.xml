@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="zpq.dao.MyOrderMapper">
+	<resultMap id="BaseResultMap" type="zpq.bean.MyOrder">
+		<id column="Id" property="id" jdbcType="INTEGER" />
+		<result column="ProID" property="proid" jdbcType="INTEGER" />
+		<result column="CusID" property="cusid" jdbcType="INTEGER" />
+		<result column="Amount" property="amount" jdbcType="INTEGER" />
+		<result column="Datetime" property="datetime" jdbcType="TIMESTAMP" />
+		<result column="CssID" property="cssid" jdbcType="INTEGER" />
+		<result column="isDeleted" property="isdeleted" jdbcType="BIT" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="zpq.bean.MyOrder"
+		extends="BaseResultMap">
+		<result column="Remark" property="remark" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		Id, ProID, CusID, Amount, Datetime, CssID, isDeleted
+	</sql>
+	<sql id="Blob_Column_List">
+		Remark
+	</sql>
+	<select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs"
+		parameterType="zpq.bean.MyOrderExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from myorder
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="zpq.bean.MyOrderExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from myorder
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from myorder
+		where Id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from myorder
+		where Id = #{id,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample" parameterType="zpq.bean.MyOrderExample">
+		delete from myorder
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="zpq.bean.MyOrder">
+		insert into myorder (Id, ProID, CusID,
+		Amount, Datetime, CssID,
+		isDeleted, Remark)
+		values (#{id,jdbcType=INTEGER}, #{proid,jdbcType=INTEGER},
+		#{cusid,jdbcType=INTEGER},
+		#{amount,jdbcType=INTEGER}, #{datetime,jdbcType=TIMESTAMP}, #{cssid,jdbcType=INTEGER},
+		#{isdeleted,jdbcType=BIT}, #{remark,jdbcType=LONGVARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="zpq.bean.MyOrder">
+		insert into myorder
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				Id,
+			</if>
+			<if test="proid != null">
+				ProID,
+			</if>
+			<if test="cusid != null">
+				CusID,
+			</if>
+			<if test="amount != null">
+				Amount,
+			</if>
+			<if test="datetime != null">
+				Datetime,
+			</if>
+			<if test="cssid != null">
+				CssID,
+			</if>
+			<if test="isdeleted != null">
+				isDeleted,
+			</if>
+			<if test="remark != null">
+				Remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="proid != null">
+				#{proid,jdbcType=INTEGER},
+			</if>
+			<if test="cusid != null">
+				#{cusid,jdbcType=INTEGER},
+			</if>
+			<if test="amount != null">
+				#{amount,jdbcType=INTEGER},
+			</if>
+			<if test="datetime != null">
+				#{datetime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="cssid != null">
+				#{cssid,jdbcType=INTEGER},
+			</if>
+			<if test="isdeleted != null">
+				#{isdeleted,jdbcType=BIT},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="zpq.bean.MyOrderExample"
+		resultType="java.lang.Integer">
+		select count(*) from myorder
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update myorder
+		<set>
+			<if test="record.id != null">
+				Id = #{record.id,jdbcType=INTEGER},
+			</if>
+			<if test="record.proid != null">
+				ProID = #{record.proid,jdbcType=INTEGER},
+			</if>
+			<if test="record.cusid != null">
+				CusID = #{record.cusid,jdbcType=INTEGER},
+			</if>
+			<if test="record.amount != null">
+				Amount = #{record.amount,jdbcType=INTEGER},
+			</if>
+			<if test="record.datetime != null">
+				Datetime = #{record.datetime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.cssid != null">
+				CssID = #{record.cssid,jdbcType=INTEGER},
+			</if>
+			<if test="record.isdeleted != null">
+				isDeleted = #{record.isdeleted,jdbcType=BIT},
+			</if>
+			<if test="record.remark != null">
+				Remark = #{record.remark,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExampleWithBLOBs" parameterType="map">
+		update myorder
+		set Id = #{record.id,jdbcType=INTEGER},
+		ProID = #{record.proid,jdbcType=INTEGER},
+		CusID = #{record.cusid,jdbcType=INTEGER},
+		Amount = #{record.amount,jdbcType=INTEGER},
+		Datetime = #{record.datetime,jdbcType=TIMESTAMP},
+		CssID = #{record.cssid,jdbcType=INTEGER},
+		isDeleted = #{record.isdeleted,jdbcType=BIT},
+		Remark = #{record.remark,jdbcType=LONGVARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update myorder
+		set Id = #{record.id,jdbcType=INTEGER},
+		ProID = #{record.proid,jdbcType=INTEGER},
+		CusID = #{record.cusid,jdbcType=INTEGER},
+		Amount = #{record.amount,jdbcType=INTEGER},
+		Datetime = #{record.datetime,jdbcType=TIMESTAMP},
+		CssID = #{record.cssid,jdbcType=INTEGER},
+		isDeleted = #{record.isdeleted,jdbcType=BIT}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="zpq.bean.MyOrder">
+		update myorder
+		<set>
+			<if test="proid != null">
+				ProID = #{proid,jdbcType=INTEGER},
+			</if>
+			<if test="cusid != null">
+				CusID = #{cusid,jdbcType=INTEGER},
+			</if>
+			<if test="amount != null">
+				Amount = #{amount,jdbcType=INTEGER},
+			</if>
+			<if test="datetime != null">
+				Datetime = #{datetime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="cssid != null">
+				CssID = #{cssid,jdbcType=INTEGER},
+			</if>
+			<if test="isdeleted != null">
+				isDeleted = #{isdeleted,jdbcType=BIT},
+			</if>
+			<if test="remark != null">
+				Remark = #{remark,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where Id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="zpq.bean.MyOrder">
+		update myorder
+		set ProID = #{proid,jdbcType=INTEGER},
+		CusID = #{cusid,jdbcType=INTEGER},
+		Amount = #{amount,jdbcType=INTEGER},
+		Datetime = #{datetime,jdbcType=TIMESTAMP},
+		CssID = #{cssid,jdbcType=INTEGER},
+		isDeleted = #{isdeleted,jdbcType=BIT},
+		Remark = #{remark,jdbcType=LONGVARCHAR}
+		where Id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="zpq.bean.MyOrder">
+		update myorder
+		set ProID = #{proid,jdbcType=INTEGER},
+		CusID = #{cusid,jdbcType=INTEGER},
+		Amount = #{amount,jdbcType=INTEGER},
+		Datetime = #{datetime,jdbcType=TIMESTAMP},
+		CssID = #{cssid,jdbcType=INTEGER},
+		isDeleted = #{isdeleted,jdbcType=BIT}
+		where Id = #{id,jdbcType=INTEGER}
+	</update>
+	<!-- 自己定义的 -->
+	<resultMap id="MoreResultMap" type="zpq.bean.MyOrder">
+		<id column="Id" property="id" jdbcType="INTEGER" />
+		<result column="ProID" property="proid" jdbcType="INTEGER" />
+		<result column="CusID" property="cusid" jdbcType="INTEGER" />
+		<result column="Amount" property="amount" jdbcType="INTEGER" />
+		<result column="Datetime" property="datetime" jdbcType="TIMESTAMP" />
+		<result column="CssID" property="cssid" jdbcType="INTEGER" />
+		<result column="remark" property="remark"
+			typeHandler="zpq.myConstants.BlobTypeHandler" />
+		<association property="product" javaType="zpq.bean.Product">
+			<id property="id" column="id" />
+			<result property="prodname" column="prodname" />
+			<result property="para4" column="para4" />
+		</association>
+		<association property="customer" javaType="zpq.bean.Customer">
+			<id property="id" column="id" />
+			<result property="nickname" column="cusName" />
+		</association>
+		<association property="css" javaType="zpq.bean.Css">
+			<id property="id" column="id" />
+			<result property="nickname" column="cssName" />
+		</association>
+	</resultMap>
+	<select id="selectMoreByExample" resultMap="MoreResultMap"
+		parameterType="zpq.bean.MyOrderExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		c.Id, ProID, CusID, Amount, Datetime, CssID,Remark,
+		d.prodname,a.nickname as cusName,b.nickname as cssName
+		from myorder c
+		left join customer a on c.CusID=a.id and c.isDeleted = false
+		left join css b on c.CssID=b.id
+		left join product d on c.proid=d.id 
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	
+</mapper>

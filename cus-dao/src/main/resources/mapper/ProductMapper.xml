@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="zpq.dao.ProductMapper" >
+  <resultMap id="BaseResultMap" type="zpq.bean.Product" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="Prodname" property="prodname" jdbcType="VARCHAR" />
+    <result column="Para1" property="para1" jdbcType="VARCHAR" />
+    <result column="Para2" property="para2" jdbcType="VARCHAR" />
+    <result column="Para3" property="para3" jdbcType="VARCHAR" />
+    <result column="Para4" property="para4" jdbcType="VARCHAR" />
+    <result column="isDeleted" property="isdeleted" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, Prodname, Para1, Para2, Para3, Para4, isDeleted
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="zpq.bean.ProductExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from product
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from product
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="zpq.bean.ProductExample" >
+    delete from product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="zpq.bean.Product" >
+    insert into product (id, Prodname, Para1, 
+      Para2, Para3, Para4, 
+      isDeleted)
+    values (#{id,jdbcType=INTEGER}, #{prodname,jdbcType=VARCHAR}, #{para1,jdbcType=VARCHAR}, 
+      #{para2,jdbcType=VARCHAR}, #{para3,jdbcType=VARCHAR}, #{para4,jdbcType=VARCHAR}, 
+      #{isdeleted,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="zpq.bean.Product" >
+    insert into product
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="prodname != null" >
+        Prodname,
+      </if>
+      <if test="para1 != null" >
+        Para1,
+      </if>
+      <if test="para2 != null" >
+        Para2,
+      </if>
+      <if test="para3 != null" >
+        Para3,
+      </if>
+      <if test="para4 != null" >
+        Para4,
+      </if>
+      <if test="isdeleted != null" >
+        isDeleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="prodname != null" >
+        #{prodname,jdbcType=VARCHAR},
+      </if>
+      <if test="para1 != null" >
+        #{para1,jdbcType=VARCHAR},
+      </if>
+      <if test="para2 != null" >
+        #{para2,jdbcType=VARCHAR},
+      </if>
+      <if test="para3 != null" >
+        #{para3,jdbcType=VARCHAR},
+      </if>
+      <if test="para4 != null" >
+        #{para4,jdbcType=VARCHAR},
+      </if>
+      <if test="isdeleted != null" >
+        #{isdeleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="zpq.bean.ProductExample" resultType="java.lang.Integer" >
+    select count(*) from product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update product
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.prodname != null" >
+        Prodname = #{record.prodname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.para1 != null" >
+        Para1 = #{record.para1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.para2 != null" >
+        Para2 = #{record.para2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.para3 != null" >
+        Para3 = #{record.para3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.para4 != null" >
+        Para4 = #{record.para4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isdeleted != null" >
+        isDeleted = #{record.isdeleted,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update product
+    set id = #{record.id,jdbcType=INTEGER},
+      Prodname = #{record.prodname,jdbcType=VARCHAR},
+      Para1 = #{record.para1,jdbcType=VARCHAR},
+      Para2 = #{record.para2,jdbcType=VARCHAR},
+      Para3 = #{record.para3,jdbcType=VARCHAR},
+      Para4 = #{record.para4,jdbcType=VARCHAR},
+      isDeleted = #{record.isdeleted,jdbcType=BIT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="zpq.bean.Product" >
+    update product
+    <set >
+      <if test="prodname != null" >
+        Prodname = #{prodname,jdbcType=VARCHAR},
+      </if>
+      <if test="para1 != null" >
+        Para1 = #{para1,jdbcType=VARCHAR},
+      </if>
+      <if test="para2 != null" >
+        Para2 = #{para2,jdbcType=VARCHAR},
+      </if>
+      <if test="para3 != null" >
+        Para3 = #{para3,jdbcType=VARCHAR},
+      </if>
+      <if test="para4 != null" >
+        Para4 = #{para4,jdbcType=VARCHAR},
+      </if>
+      <if test="isdeleted != null" >
+        isDeleted = #{isdeleted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="zpq.bean.Product" >
+    update product
+    set Prodname = #{prodname,jdbcType=VARCHAR},
+      Para1 = #{para1,jdbcType=VARCHAR},
+      Para2 = #{para2,jdbcType=VARCHAR},
+      Para3 = #{para3,jdbcType=VARCHAR},
+      Para4 = #{para4,jdbcType=VARCHAR},
+      isDeleted = #{isdeleted,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
