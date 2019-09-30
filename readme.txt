@@ -1,2 +1,3 @@
 本项目是用来测试ssm框架下maven实现时，把dao层抽出为单独一个模块时，web模块能否读取配置dao的文件
 在dev分支上做的改动
+测试Fast Forward 模式合并代码
