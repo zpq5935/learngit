@@ -2,3 +2,4 @@
 在master分支做的改动
 在dev分支上做的改动
 改动
+再改动，测试合并时的Fast forward模式
