@@ -5,3 +5,6 @@ new file
 
 远程对newfile。txt文件的改动
 >>>>>>> 
+
+
+issue-1：假设bug已修复
