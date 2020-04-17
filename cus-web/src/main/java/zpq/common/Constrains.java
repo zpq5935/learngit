@@ -9,5 +9,7 @@ public interface Constrains {
 	String TH = "TH";
 	
 	String TH3 = "TH3";
+	
+	String TH4 = "TH4";
 
 }
