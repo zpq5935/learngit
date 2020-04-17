@@ -22,6 +22,4 @@ public interface Constrains {
 	String TH7 = "TH3";
 	
 	String TH8 = "TH4";
-	
-	
 }
