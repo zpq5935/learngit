@@ -15,7 +15,7 @@
         <servlet.version>3.0.1</servlet.version>
         <mybatis.version>3.4.2</mybatis.version>
         <junit.version>4.12</junit.version>
-        <log4j2.version>2.5</log4j2.version>
+        <log4j2.version>2.13.3</log4j2.version>
         <aspectjrt.version>1.7.4</aspectjrt.version>
         <cglib.version>3.1</cglib.version>
         <hibernate.version>4.3.11.Final</hibernate.version>
