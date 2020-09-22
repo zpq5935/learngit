@@ -5,8 +5,8 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -20,8 +20,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
 import zpq.bean.Product;
-import zpq.myConstants.Msg;
-import zpq.service.cusServiceService;
+import zpq.constants.Msg;
+import zpq.service.ICusServiceService;
 
 @RequestMapping("product")
 @Controller
@@ -29,9 +29,10 @@ public class ProductController {
 
 	@Autowired
 	@Qualifier("cusServiceService")
-	cusServiceService cusServiceService;
+	ICusServiceService cusServiceService;
 
-	private Log logger = LogFactory.getLog(getClass());
+//	private Log logger = LogFactory.getLog(getClass());
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	/********************************* 方法 **************************************/
 	/**
@@ -65,7 +66,7 @@ public class ProductController {
 	@RequestMapping("addProduct")
 	public ModelAndView addProduct(Product product, ModelAndView mv) {
 		Msg msg = cusServiceService.addProduct(product);
-		logger.info(msg.getExtend().get("msg"));
+		logger.info(msg.getExtend().get("msg").toString());
 		mv.addObject("msg", msg.getExtend().get("msg"));
 		mv.setViewName("redirect:/product/selectProduct");
 		return mv;
@@ -85,12 +86,12 @@ public class ProductController {
 		// 执行获取数据并跳转更新页面
 		if (flag == 1) {
 			Msg msg = cusServiceService.findProductById(id);
-			logger.info(msg.getExtend().get("msg"));
+			logger.info(msg.getExtend().get("msg").toString());
 			mv.addObject("product", msg.getExtend().get("product"));
 			mv.setViewName("product/updateProduct");
 		} else {// 更新数据
 			Msg msg = cusServiceService.updateProduct(product, oriProductName);
-			logger.info(msg.getExtend().get("msg"));
+			logger.info(msg.getExtend().get("msg").toString());
 			mv.setViewName("redirect:/product/selectProduct");
 		}
 
@@ -113,7 +114,7 @@ public class ProductController {
 			@RequestParam(value = "pn", defaultValue = "1") Integer pn,
 			@RequestParam(value = "prodname", defaultValue = "") String prodname) throws UnsupportedEncodingException {
 		Msg msg = cusServiceService.deleteProduct(id);
-		logger.info(msg.getExtend().get("msg"));
+		logger.info(msg.getExtend().get("msg").toString());
 
 		String url = "redirect:/product/selectProduct?" + "prodname" + URLEncoder.encode(prodname, "UTF-8") + "&pn="
 				+ pn;
@@ -143,7 +144,7 @@ public class ProductController {
 			ids_List.add(Integer.valueOf(id));
 		}
 		Msg msg = cusServiceService.deleteProducts(ids_List);
-		logger.info(msg.getExtend().get("msg"));
+		logger.info(msg.getExtend().get("msg").toString());
 
 		String url = "redirect:/product/selectProduct?" + "prodname" + URLEncoder.encode(prodname, "UTF-8") + "&pn="
 				+ pn;

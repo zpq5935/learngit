@@ -122,4 +122,22 @@ public class Record {
     public void setStatus(String status) {
         this.status = status == null ? null : status.trim();
     }
+
+    @Override
+    public String toString() {
+        return "Record{" +
+                "id=" + id +
+                ", cusid=" + cusid +
+                ", cssid=" + cssid +
+                ", datetime=" + datetime +
+                ", mmid=" + mmid +
+                ", orderid=" + orderid +
+                ", createdate=" + createdate +
+                ", mmagree=" + mmagree +
+                ", cusagree=" + cusagree +
+                ", maidatest=" + maidatest +
+                ", maidateed=" + maidateed +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }

@@ -2,8 +2,8 @@ package zpq.controller;
 
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import zpq.myConstants.ReportInfo;
-import zpq.service.cusServiceService;
+import zpq.constants.ReportInfo;
+import zpq.service.ICusServiceService;
 
 @RequestMapping("report")
 @Controller
@@ -20,9 +20,10 @@ public class ReportController {
 	
 	@Autowired
 	@Qualifier("cusServiceService")
-	private cusServiceService cusServiceService;
+	private ICusServiceService cusServiceService;
 
-	private Log logger = LogFactory.getLog(getClass());
+//	private Log logger = LogFactory.getLog(getClass());
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	/****************************************/
 	
 	/**
@@ -34,7 +35,7 @@ public class ReportController {
 	public List<ReportInfo> serviceReportByProd(){
 		List<ReportInfo> reportInfos = null;
 		reportInfos =  cusServiceService.selectServiceRptWithProdName();
-		logger.info(reportInfos);
+		logger.info(reportInfos.toString());
 		return reportInfos;
 	}
 	/**
@@ -46,7 +47,7 @@ public class ReportController {
 	public List<ReportInfo> serviceReportByProdPer(){
 		List<ReportInfo> reportInfos = null;
 		reportInfos =  cusServiceService.selectServiceRptWithPro_Per();
-		logger.info(reportInfos);
+		logger.info(reportInfos.toString());
 		return reportInfos;
 	}
 	/**
@@ -58,7 +59,7 @@ public class ReportController {
 	public List<ReportInfo> serviceReportByTime(){
 		List<ReportInfo> reportInfos = null;
 		reportInfos =  cusServiceService.selectServiceRptWithTime();
-		logger.info(reportInfos);
+		logger.info(reportInfos.toString());
 		return reportInfos;
 	}
 	/**
@@ -70,7 +71,7 @@ public class ReportController {
 	public List<ReportInfo> orderReportByProd(){
 		List<ReportInfo> reportInfos = null;
 		reportInfos =  cusServiceService.selectOrderRptWithProdName();
-		logger.info(reportInfos);
+		logger.info(reportInfos.toString());
 		return reportInfos;
 	}
 	/**
@@ -82,7 +83,7 @@ public class ReportController {
 	public List<ReportInfo> orderReportByTime(){
 		List<ReportInfo> reportInfos = null;
 		reportInfos =  cusServiceService.selectOrderRptWithProdTime();
-		logger.info(reportInfos);
+		logger.info(reportInfos.toString());
 		return reportInfos;
 	}
 }

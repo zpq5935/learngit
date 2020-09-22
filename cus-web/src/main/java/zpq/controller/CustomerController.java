@@ -5,8 +5,8 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -20,9 +20,9 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
 import zpq.bean.Customer;
-import zpq.myConstants.Constrants;
-import zpq.myConstants.Msg;
-import zpq.service.cusServiceService;
+import zpq.constants.Constrants;
+import zpq.constants.Msg;
+import zpq.service.ICusServiceService;
 
 @RequestMapping("customer")
 @Controller
@@ -30,9 +30,10 @@ public class CustomerController {
 
 	@Autowired
 	@Qualifier("cusServiceService")
-	cusServiceService cusServiceService;
+	ICusServiceService cusServiceService;
 
-	private Log logger = LogFactory.getLog(getClass());
+	// private Log logger = LogFactory.getLog(getClass());
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	/******************************************************************************/
 
@@ -70,7 +71,7 @@ public class CustomerController {
 	@RequestMapping("addCustomer")
 	public ModelAndView addCustomer(Customer customer, ModelAndView mv) {
 		Msg msg = cusServiceService.addCustomer(customer);
-		logger.info(msg.getExtend().get("msg"));
+		logger.info(msg.getExtend().get("msg").toString());
 		mv.addObject("msg", msg.getExtend().get("msg"));
 
 		mv.setViewName("redirect:/customer/selectCustomer");
@@ -91,12 +92,12 @@ public class CustomerController {
 		// 执行获取数据并跳转更新页面
 		if (flag == 1) {
 			Msg msg = cusServiceService.findUserById(id, Constrants.CUSTOMER);
-			logger.info(msg.getExtend().get("msg"));
+			logger.info(msg.getExtend().get("msg").toString());
 			mv.addObject("customer", msg.getExtend().get("user"));
 			mv.setViewName("customer/updateCustomer");
 		} else {// 更新数据
 			Msg msg = cusServiceService.updateCustomer(customer, oriAccount);
-			logger.info(msg.getExtend().get("msg"));
+			logger.info(msg.getExtend().get("msg").toString());
 			mv.setViewName("redirect:/customer/selectCustomer");
 		}
 
@@ -121,7 +122,7 @@ public class CustomerController {
 			@RequestParam(value = "onelevelAddress", defaultValue = "") String onelevelAddress)
 			throws UnsupportedEncodingException {
 		Msg msg = cusServiceService.deleteUser(id, Constrants.CUSTOMER);
-		logger.info(msg.getExtend().get("msg"));
+		logger.info(msg.getExtend().get("msg").toString());
 
 		String url = "redirect:/customer/selectCustomer?" + "account=" + URLEncoder.encode(account, "UTF-8")
 				+ "&onelevelAddress=" + URLEncoder.encode(onelevelAddress, "UTF-8") + "&pn=" + pn;
@@ -153,18 +154,20 @@ public class CustomerController {
 			ids_List.add(Integer.valueOf(id));
 		}
 		Msg msg = cusServiceService.deleteUsers(ids_List, Constrants.CUSTOMER);
-		logger.info(msg.getExtend().get("msg"));
+		logger.info(msg.getExtend().get("msg").toString());
 
 		mv.setViewName("redirect:/customer/selectCustomer?" + "account=" + URLEncoder.encode(account, "UTF-8")
 				+ "&onelevelAddress=" + URLEncoder.encode(onelevelAddress, "UTF-8") + "&pn=" + pn);
 		return mv;
 	}
+
 	/**
 	 * 结合订单页面的ajax使用
+	 * 
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value="selectCustomerRetJson",method=RequestMethod.GET)
+	@RequestMapping(value = "selectCustomerRetJson", method = RequestMethod.GET)
 	public List<Customer> selectCustomerRetJson() {
 		List<Customer> customers = cusServiceService.selectCustomer(null, null);
 		return customers;

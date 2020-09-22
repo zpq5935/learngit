@@ -70,4 +70,17 @@ public class Product {
     public void setIsdeleted(Boolean isdeleted) {
         this.isdeleted = isdeleted;
     }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", prodname='" + prodname + '\'' +
+                ", para1='" + para1 + '\'' +
+                ", para2='" + para2 + '\'' +
+                ", para3='" + para3 + '\'' +
+                ", para4='" + para4 + '\'' +
+                ", isdeleted=" + isdeleted +
+                '}';
+    }
 }

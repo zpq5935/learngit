@@ -100,4 +100,20 @@ public class Customer {
     public void setIsdeleted(Boolean isdeleted) {
         this.isdeleted = isdeleted;
     }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", account='" + account + '\'' +
+                ", password='" + password + '\'' +
+                ", qq='" + qq + '\'' +
+                ", email='" + email + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", onelevelAddress='" + onelevelAddress + '\'' +
+                ", detailedAddress='" + detailedAddress + '\'' +
+                ", isdeleted=" + isdeleted +
+                '}';
+    }
 }

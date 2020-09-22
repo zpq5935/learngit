@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="zpq.dao.ReportMapper">
 	<!-- 通过产品名称查询维修记录 -->
-	<select id="selectServiceRptWithProdName" resultType="zpq.myConstants.ReportInfo">
+	<select id="selectServiceRptWithProdName" resultType="zpq.constants.ReportInfo">
 		select
 		count(*) as size,d.Prodname as xAxis
 		from record r LEFT JOIN myorder o
@@ -12,7 +12,7 @@
 		d.Prodname
 	</select>
 	<!-- 通过时间查询维修记录 -->
-	<select id="selectServiceRptByTime" resultType="zpq.myConstants.ReportInfo">
+	<select id="selectServiceRptByTime" resultType="zpq.constants.ReportInfo">
 		select
 		count(*) as size,DATE_FORMAT(r.Datetime,'%m') as xAxis
 		from record r
@@ -22,7 +22,7 @@
 		DATE_FORMAT(r.Datetime,'%m')
 	</select>
 	<!-- 通过时间查询订单记录 -->
-	<select id="selectOrderRptByTime" resultType="zpq.myConstants.ReportInfo">
+	<select id="selectOrderRptByTime" resultType="zpq.constants.ReportInfo">
 		select
 		count(*) as size,DATE_FORMAT(r.Datetime,'%m') as xAxis
 		from myorder r
@@ -31,7 +31,7 @@
 		GROUP BY DATE_FORMAT(r.Datetime,'%m')
 	</select>
 	<!-- 通过产品名称查询订单记录 -->
-	<select id="selectOrderRptWithProdName" resultType="zpq.myConstants.ReportInfo">
+	<select id="selectOrderRptWithProdName" resultType="zpq.constants.ReportInfo">
 		select
 		count(*) as size,d.Prodname as xAxis
 		from myorder o left join product d
@@ -39,7 +39,7 @@
 		GROUP BY
 		d.Prodname
 	</select>
-	<select id="countOrderByProdName" resultType="zpq.myConstants.ReportInfo" parameterType="java.lang.String">
+	<select id="countOrderByProdName" resultType="zpq.constants.ReportInfo" parameterType="java.lang.String">
 		select count(*) as size,prodname as xAxis
 		from myorder  left join product  on myorder.ProID=product.id
 		where prodname = #{prodName,jdbcType=VARCHAR}

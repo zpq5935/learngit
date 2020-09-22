@@ -98,7 +98,7 @@
   </delete>
   <delete id="deleteByExample" parameterType="zpq.bean.CssExample" >
     delete from css
-    <if test="_parameter != null" >
+    <if test="_parameter != null and !='' " >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>

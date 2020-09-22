@@ -80,4 +80,18 @@ public class MainMan {
     public void setIsdeleted(Boolean isdeleted) {
         this.isdeleted = isdeleted;
     }
+
+    @Override
+    public String toString() {
+        return "MainMan{" +
+                "id=" + id +
+                ", account='" + account + '\'' +
+                ", password='" + password + '\'' +
+                ", qq='" + qq + '\'' +
+                ", email='" + email + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", isdeleted=" + isdeleted +
+                '}';
+    }
 }

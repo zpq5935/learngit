@@ -2,7 +2,7 @@ package zpq.dao;
 
 import java.util.List;
 
-import zpq.myConstants.ReportInfo;
+import zpq.constants.ReportInfo;
 
 public interface ReportMapper {
 	//通过产品名称查询维修记录
